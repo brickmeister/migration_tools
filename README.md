@@ -34,7 +34,7 @@ Enter the directory : `src/zeppelin_migration/`
 ### Convert a single json file
 Run the following command below to convert a single Zeppelin json file. The notebooks will be located in the same directory with a suffix of *--magicked.py*
 
-`python3 zeppelin_converter.py --file <path of file> --langauge <language>`
+`python3 zeppelin_converter.py --file <path of file> --language <language>`
 
 ### Convert json files in a directory
 Run the following command below to json notebooks in a directory. The notebooks will be located in the same directory with a suffix of *--magicked.py*

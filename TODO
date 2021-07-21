@@ -1,0 +1,4 @@
+NEED TO ADD SUPPORT FOR NOTEBOOK SCOPED WIDGETS
+For zeppelin notebooks:
+    $ = cell scoped
+    $$ = Notebook scoped

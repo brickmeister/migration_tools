@@ -1,6 +1,11 @@
 # Introduction
 This repo contains tools for migrating from various platforms to Databricks.
-
+- [Introduction](#introduction)
+- [Supported Platforms](#supported-platforms)
+- [Qubole](#qubole)
+  - [Zeppelin Notebook Migration](#zeppelin-notebook-migration)
+    - [Convert a single json file](#convert-a-single-json-file)
+    - [Convert json files in a directory](#convert-json-files-in-a-directory)
 # Supported Platforms
 |Platform|Status|
 |--------|------|
@@ -9,9 +14,9 @@ This repo contains tools for migrating from various platforms to Databricks.
 # Qubole
 Migrating over Qubole workloads consists of several steps outlined below.
 
-|Feature|Description|
-|-------|-----------|
-|Zeppelin Notebooks|Notebooks used for day to day workloads [Zeppelin Notebook Migration](#zeppelin-notebook-migration)|
+|Feature|Description|Link|
+|-------|-----------|----|
+|Zeppelin Notebooks|Notebooks used for day to day workloads | [Zeppelin Notebook Migration](#zeppelin-notebook-migration)|
 |Airflow|Scheduler used to orchestrate workloads|
 |Hive Metastore|Database metadata needed for accessing data|
 

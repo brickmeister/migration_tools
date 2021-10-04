@@ -1,4 +1,4 @@
-import os
+import os, sys
 import argparse
 from typing import List, Dict
 from lib.convert import convert

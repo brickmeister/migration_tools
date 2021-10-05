@@ -6,7 +6,7 @@ def load_json(_file : str) -> Dict:
     Load json file
     """
 
-    with open(_file) as f:
+    with open(_file, encoding = 'utf-8-sig') as f:
         try:
             _json = json.load(f)['paragraphs']
             return _json

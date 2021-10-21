@@ -28,7 +28,10 @@ def convert(_json : List[Dict],
 
                 # deal with new line white space
                 if len(_str) > 1:
-                    _index = next(i for i,v in enumerate(_str) if v != '')
+                    try:
+                        _index = next(i for i,v in enumerate(_str) if v != '')
+                    except:
+                        _index = 0
                     # add in the white space in the string to preserve structure
                     _string.extend(['' for a in range(_index)])
                     _str = _str[_index:]

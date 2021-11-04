@@ -2,13 +2,16 @@ from typing import Dict, List
 from .config_mapper import config_mapper
 
 def convert(_json : List[Dict],
-            _language : str) -> List[str]:
+            _language : str) -> Dict[str, List[str]]:
     """
     Convert zeppelin json to databricks .py files
     """
 
     # Create a string array
     _string = []
+
+    # Grab user credentials
+    _user = ""
         
     # Write databricks title
     _string.append('# Databricks notebook source\n')
@@ -21,6 +24,12 @@ def convert(_json : List[Dict],
         
         _string.append('# COMMAND ----------\n')
         _string.append('\n')
+
+        if not _user:
+            try:
+                _user = _cell['user']
+            except:
+                pass
 
         try:
             if 'text' in _cell:
@@ -51,4 +60,5 @@ def convert(_json : List[Dict],
 
         except Exception as err:
             raise ValueError(err)
-    return _string
+    return {'user' : _user, 
+            'text' : _string}

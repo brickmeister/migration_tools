@@ -6,7 +6,8 @@ from lib.load_json import load_json
 from lib.write_notebook import write_notebook
 from lib.config_mapper import config_mapper
 
-def main(_files : List[str]) -> None:
+def main(_files : List[str], 
+         out_dir : str = None) -> None:
     """
     Main insertion function
     """
@@ -19,12 +20,26 @@ def main(_files : List[str]) -> None:
         try:
             # load the notebook json file
             _json = load_json(_file)
-            
-            # set the new output file
-            _new_file : str = _file.replace('.json', '-magicked.py')
 
             # convert the notebook
-            _notebook = convert(_json, _language)
+            _convert = convert(_json, _language)
+            _notebook = _convert['text']
+            _user = _convert['user']
+
+            # set the new output file
+            if out_dir == '':
+                _new_file : str = _file.replace('.json', '-magicked.py')
+            else:
+                # if output directory is specified, use format
+                #   out_directory/user/notebook.py
+                _dir : str = '/'.join([out_dir, _user])
+
+                # check if path exists, create it if it doesn't
+                if not os.path.isdir(_dir):
+                    os.mkdir(_dir)
+                
+                _new_file : str = '/'.join([_dir, 
+                                            _file.replace('.json', '-magicked.py').split("/")[-1]])
 
             # write out results
             write_notebook(_notebook, _new_file)
@@ -42,6 +57,7 @@ if __name__ == '__main__':
     parser.add_argument('--dir', help='Directory containing Zeppelin JSONs to convert to Databricks Notebooks')
     parser.add_argument('--file', help='Zeppelin JSON convert to a Databricks Notebook')
     parser.add_argument('--language', help='Default Zeppelin Notebook language (DEFAULT : spark)', default = 'spark')
+    parser.add_argument('--out_dir', help='Specify output directory for the converted notebooks', default = '')
     args = parser.parse_args()
 
     ## SETUP
@@ -63,4 +79,4 @@ if __name__ == '__main__':
         raise ValueError(f"Couldn't understand default language. This language is probably not supported")
     
     # Run the main insertion function
-    main(_files)
+    main(_files, args.out_dir)

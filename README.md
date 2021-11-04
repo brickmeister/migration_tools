@@ -31,6 +31,7 @@ Enter the directory : `src/zeppelin_migration/`
 |--language|Default language of the zeppelin notebook : spark, pyspark, sql, dep|
 |--file|Location of zeppelin json to convert|
 |--directory|Location of zeppelin json directory to convert|
+|--out_dir|Location to output databricks notebooks to. If not used, will default to the same folders as the zeppelin notebooks. If used will write to `<output directory>/<user>/<notebook>`|
 
 ### Convert a single json file
 Run the following command below to convert a single Zeppelin json file. The notebooks will be located in the same directory with a suffix of *--magicked.py*

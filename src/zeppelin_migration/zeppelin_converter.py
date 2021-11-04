@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, glob
 import argparse
 from typing import List, Dict
 from lib.convert import convert
@@ -63,8 +63,8 @@ if __name__ == '__main__':
     ## SETUP
     # check if using a directory or a file
     if args.dir:
-        _files = os.listdir(args.dir)
-        _files = ['/'.join([args.dir, _file]) for _file in _files if '.json' in _file]
+        # _files = os.listdir(args.dir)
+        _files = glob.glob(args.dir+'/**/*.json', recursive = True)
     elif args.file:
         _files = [args.file]
     else:

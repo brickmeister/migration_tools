@@ -6,6 +6,7 @@ This repo contains tools for migrating from various platforms to Databricks.
   - [Zeppelin Notebook Migration](#zeppelin-notebook-migration)
     - [Convert a single json file](#convert-a-single-json-file)
     - [Convert json files in a directory](#convert-json-files-in-a-directory)
+    - [Convert json files in a directory and output to a direcotry](#convert-json-files-in-a-directory-and-output-to-a-direcotry)
 # Supported Platforms
 |Platform|Status|
 |--------|------|
@@ -37,6 +38,11 @@ Run the following command below to convert a single Zeppelin json file. The note
 `python3 zeppelin_converter.py --file <path of file> --language <language>`
 
 ### Convert json files in a directory
-Run the following command below to json notebooks in a directory. The notebooks will be located in the same directory with a suffix of *--magicked.py*
+Run the following command below to convert json notebooks in a directory. The notebooks will be located in the same directory with a suffix of *--magicked.py*
 
 `python3 zeppelin_converter.py --dir <directory> --language <language>`
+
+### Convert json files in a directory and output to a direcotry
+Run the following command below to convert json notebooks in a directory. The notebooks will be located in the `out_dir/username` with a suffix of *--magicked.py*
+
+`python3 zeppelin_converter.py --dir <directory> --language <language> --out_dir <output directory>`

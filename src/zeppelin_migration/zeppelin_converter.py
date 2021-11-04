@@ -63,7 +63,6 @@ if __name__ == '__main__':
     ## SETUP
     # check if using a directory or a file
     if args.dir:
-        # _files = os.listdir(args.dir)
         _files = glob.glob(args.dir+'/**/*.json', recursive = True)
     elif args.file:
         _files = [args.file]

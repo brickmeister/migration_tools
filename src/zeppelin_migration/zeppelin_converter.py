@@ -55,7 +55,7 @@ def main(_files : List[str],
         except Exception as err:
             _errored_files.append((_file, err))
 
-    print(f"Processed Files : {_processed_files}\nErrored Files : {_errored_files}\n")
+    print(f"Processed Files : {_processed_files}\n\nErrored Files : {_errored_files}\n")
 
 if __name__ == '__main__':
     """

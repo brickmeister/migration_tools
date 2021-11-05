@@ -36,6 +36,7 @@ def main(_files : List[str],
             _convert = convert(_json, _lang)
             _notebook = _convert['text']
             _user = _convert['user']
+            _note_id = _convert['note_id']
 
             # set the new output file
             if out_dir == '':
@@ -51,6 +52,10 @@ def main(_files : List[str],
                 
                 _new_file : str = '/'.join([_dir,
                                             f"{_name}-magicked.py"])
+
+            if os.path.isfile(_new_file):
+                _new_file : str = '/'.join([_dir,
+                                            f"{_name}-{_note_id}-magicked.py"])
 
             # write out results
             write_notebook(_notebook, _new_file)

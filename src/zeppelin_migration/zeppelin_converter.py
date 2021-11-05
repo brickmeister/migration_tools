@@ -23,13 +23,19 @@ def main(_files : List[str],
 
         try:
             # load the notebook json file
-            _json = load_json(_file)
+            _json_load = load_json(_file)
+            _json = _json_load['json']
+            _name = _json_load['name']
+
+            if _json_load['lang'] == "":
+                _lang = _language
+            else:
+                _lang = _json_load['lang']
 
             # convert the notebook
-            _convert = convert(_json, _language)
+            _convert = convert(_json, _lang)
             _notebook = _convert['text']
             _user = _convert['user']
-            _note_id = _convert['note_id']
 
             # set the new output file
             if out_dir == '':
@@ -44,7 +50,7 @@ def main(_files : List[str],
                     os.makedirs(_dir)
                 
                 _new_file : str = '/'.join([_dir,
-                                            f"{_note_id}-magicked.py"])
+                                            f"{_name}-magicked.py"])
 
             # write out results
             write_notebook(_notebook, _new_file)

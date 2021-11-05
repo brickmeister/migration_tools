@@ -71,6 +71,11 @@ def convert(_json : List[Dict],
 
         except Exception as err:
             raise ValueError(err)
+    
+    ## if we still don't have a user, label it as unknown
+    if _user == "":
+        _user = "unknown"
+
     return {'user' : _user, 
             'text' : _string,
             'note_id' : _note_id}

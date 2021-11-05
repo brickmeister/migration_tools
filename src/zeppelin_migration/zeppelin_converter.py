@@ -11,6 +11,10 @@ def main(_files : List[str],
     """
     Main insertion function
     """
+
+    # keep stats on files
+    _processed_files = []
+    _errored_files = []
     
     for _file in _files:
         """
@@ -45,9 +49,13 @@ def main(_files : List[str],
             # write out results
             write_notebook(_notebook, _new_file)
 
+            # add file to written files
+            _processed_files.append(_file)
+
         except Exception as err:
-            raise ValueError(str({"msg" : f"Failed to process {_file}",
-                                  "err" : err}))
+            _errored_files.append((_file, err))
+
+    print(f"Processed Files : {_processed_files}\nErrored Files : {_errored_files}\n")
 
 if __name__ == '__main__':
     """

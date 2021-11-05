@@ -12,6 +12,9 @@ def convert(_json : List[Dict],
 
     # Grab user credentials
     _user = ""
+
+    # Grab the notebook id
+    _note_id = ""
         
     # Write databricks title
     _string.append('# Databricks notebook source\n')
@@ -27,7 +30,15 @@ def convert(_json : List[Dict],
 
         if not _user:
             try:
+                ## get the user email from the user object
                 _user = _cell['user']
+            except:
+                pass
+
+        if not _note_id:
+            try:
+                ## get the notebook id from the id object
+                _note_id = _cell['id'].split("_")[-1]
             except:
                 pass
 
@@ -61,4 +72,5 @@ def convert(_json : List[Dict],
         except Exception as err:
             raise ValueError(err)
     return {'user' : _user, 
-            'text' : _string}
+            'text' : _string,
+            'note_id' : _note_id}

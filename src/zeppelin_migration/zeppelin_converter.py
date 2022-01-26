@@ -29,8 +29,11 @@ def main(_files : List[str],
 
             if _json_load['lang'] == "":
                 _lang = _language
+            elif '%'+_json_load['lang'] in config_mapper:
+                _lang = config_mapper['%'+_json_load['lang']]
             else:
-                _lang = _json_load['lang']
+                print("Couldn't decrypt language\n")
+                exit
 
             # convert the notebook
             _convert = convert(_json, _lang)
@@ -41,6 +44,7 @@ def main(_files : List[str],
             # set the new output file
             if out_dir == '':
                 _new_file : str = _file.replace('.json', '-magicked.py')
+                _dir : str = '/'.join(_file.split("/")[:-1])
             else:
                 # if output directory is specified, use format
                 #   out_directory/user/notebook.py
@@ -50,13 +54,14 @@ def main(_files : List[str],
                 if not os.path.isdir(_dir):
                     os.makedirs(_dir)
 
-                if _name = "":
+                if _name == "":
                     _new_file : str = '/'.join([_dir,
                                                  f"{_note_id}-magicked.py"])
                 else:
                     _new_file : str = '/'.join([_dir,
                                                 f"{_name}-magicked.py"])
 
+            # check if the file already exists
             if os.path.isfile(_new_file):
                 _new_file : str = '/'.join([_dir,
                                             f"{_name}-{_note_id}-magicked.py"])
@@ -102,4 +107,7 @@ if __name__ == '__main__':
         raise ValueError(f"Couldn't understand default language. This language is probably not supported")
     
     # Run the main insertion function
-    main(_files, args.out_dir)
+    if args.out_dir:
+        main(_files, args.out_dir)
+    else:
+        main(_files, '')

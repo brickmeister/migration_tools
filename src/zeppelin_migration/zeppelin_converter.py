@@ -49,9 +49,13 @@ def main(_files : List[str],
                 # check if path exists, create it if it doesn't
                 if not os.path.isdir(_dir):
                     os.makedirs(_dir)
-                
-                _new_file : str = '/'.join([_dir,
-                                            f"{_name}-magicked.py"])
+
+                if _name = "":
+                    _new_file : str = '/'.join([_dir,
+                                                 f"{_note_id}-magicked.py"])
+                else:
+                    _new_file : str = '/'.join([_dir,
+                                                f"{_name}-magicked.py"])
 
             if os.path.isfile(_new_file):
                 _new_file : str = '/'.join([_dir,

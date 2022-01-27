@@ -27,13 +27,10 @@ def main(_files : List[str],
             _json = _json_load['json']
             _name = _json_load['name']
 
-            if _json_load['lang'] == "":
-                _lang = _language
-            elif '%'+_json_load['lang'] in config_mapper:
+            try:
                 _lang = config_mapper['%'+_json_load['lang']]
-            else:
-                print("Couldn't decrypt language\n")
-                exit
+            except:
+                _lang = _language
 
             # convert the notebook
             _convert = convert(_json, _lang)
@@ -41,14 +38,15 @@ def main(_files : List[str],
             _user = _convert['user']
             _note_id = _convert['note_id']
 
-            if _lang in extension_mapper:
+            try:
                 out_ext : str = extension_mapper[_lang]
-            else:
-                print(f"Failed to find extension for {_lang}")
+            except Exception as err:
+                raise ValueError(f"Failed to find extention for {_lang}, err : {err}")
 
             # set the new output file
             if out_dir == '':
                 _new_file : str = _file.replace('.json', f"-magicked{out_ext}")
+                _dir = '/'.join(_new_file.split("/")[:-1])
             else:
                 # if output directory is specified, use format
                 #   out_directory/user/notebook.py

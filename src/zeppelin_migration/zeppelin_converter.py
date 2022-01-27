@@ -4,7 +4,7 @@ from typing import List, Dict
 from lib.convert import convert
 from lib.load_json import load_json
 from lib.write_notebook import write_notebook
-from lib.config_mapper import config_mapper
+from lib.config_mapper import config_mapper, extension_mapper, comment_mapper
 
 def main(_files : List[str], 
          out_dir : str = None) -> None:
@@ -41,10 +41,14 @@ def main(_files : List[str],
             _user = _convert['user']
             _note_id = _convert['note_id']
 
+            if _lang in extension_mapper:
+                out_ext : str = extension_mapper[_lang]
+            else:
+                print(f"Failed to find extension for {_lang}")
+
             # set the new output file
             if out_dir == '':
-                _new_file : str = _file.replace('.json', '-magicked.py')
-                _dir : str = '/'.join(_file.split("/")[:-1])
+                _new_file : str = _file.replace('.json', f"-magicked{out_ext}")
             else:
                 # if output directory is specified, use format
                 #   out_directory/user/notebook.py
@@ -53,18 +57,21 @@ def main(_files : List[str],
                 # check if path exists, create it if it doesn't
                 if not os.path.isdir(_dir):
                     os.makedirs(_dir)
+                
+                _new_file : str = '/'.join([_dir,
+                                            f"{_name}-magicked{out_ext}"])
 
                 if _name == "":
                     _new_file : str = '/'.join([_dir,
-                                                 f"{_note_id}-magicked.py"])
+                                                 f"{_note_id}-magicked{out_ext}"])
                 else:
                     _new_file : str = '/'.join([_dir,
-                                                f"{_name}-magicked.py"])
+                                                f"{_name}-magicked{out_ext}"])
 
             # check if the file already exists
             if os.path.isfile(_new_file):
                 _new_file : str = '/'.join([_dir,
-                                            f"{_name}-{_note_id}-magicked.py"])
+                                            f"{_name}-{_note_id}-magicked{out_ext}"])
 
             # write out results
             write_notebook(_notebook, _new_file)

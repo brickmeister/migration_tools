@@ -10,4 +10,17 @@ config_mapper : Dict[str, str] = {'%pyspark' : '%python',
                                   '%sh'      : '%sh',
                                   '%spark'   : '%scala',
                                   '%sql'     : '%sql',
-                                  '%md'      : '%md'}
+                                  '%md'      : '%md',
+                                  '%sparkpy3.sql' : '%sql'}
+
+
+
+# valid extensions
+extension_mapper : Dict[str, str] = {'%python' : '.py',
+                                     '%scala' : '.scala',
+                                     '%sql' : '.sql'}
+
+# comment mapper
+comment_mapper : Dict[str,str] = {'%python' : '#',
+                                  '%ssql' : '--',
+                                  '%scala' : '//'}

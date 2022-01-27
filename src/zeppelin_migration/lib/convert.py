@@ -1,5 +1,5 @@
 from typing import Dict, List
-from .config_mapper import config_mapper
+from .config_mapper import config_mapper, comment_mapper
 
 def convert(_json : List[Dict],
             _language : str) -> Dict[str, List[str]]:
@@ -15,17 +15,21 @@ def convert(_json : List[Dict],
 
     # Grab the notebook id
     _note_id = ""
+
+    # get the comment marker for the langauge
+    _comment : str = comment_mapper[_language]
         
     # Write databricks title
-    _string.append('# Databricks notebook source\n')
+    _string.append(f"{_comment} Databricks notebook source\n")
+
     # loop for all cells
     for _cell in _json:
         try:
-            _string.append(f"# DBTITLE 1,{_cell['title']}\n")
+            _string.append(f"{_comment} DBTITLE 1,{_cell['title']}\n")
         except:
             pass
         
-        _string.append('# COMMAND ----------\n')
+        _string.append(f"{_comment} COMMAND ----------\n")
         _string.append('\n')
 
         if not _user:
@@ -58,15 +62,15 @@ def convert(_json : List[Dict],
 
                 # Add the magic cell command
                 if _str[0].lower() in config_mapper.keys():
-                    _string.append(f'# MAGIC {config_mapper[_str[0]]}\n')
+                    _string.append(f"{_comment} MAGIC {config_mapper[_str[0]]}\n")
                     _str = _str[1:]
                 else:
                     # use the default language if not specified
-                    _string.append(f'# MAGIC {_language}\n')
-                    _string.append('# MAGIC\n')
+                    _string.append(f"{_comment} MAGIC {_language}\n")
+                    _string.append(f"{_comment} MAGIC\n")
 
                 for _cmd in _str:
-                    _string.append(f"# MAGIC {_cmd}\n")
+                    _string.append(f"{_comment} MAGIC {_cmd}\n")
                 _string.append('\n')
 
         except Exception as err:

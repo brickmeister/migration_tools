@@ -28,8 +28,8 @@ def convert(_json : List[Dict],
         try:
             _string.append(f"{_comment} DBTITLE 1,{_cell['title']}\n")
         except:
-            pass
-        
+            _string.append(f"{_comment} MAGIC \n")
+
         _string.append(f"{_comment} COMMAND ----------\n")
         _string.append('\n')
 

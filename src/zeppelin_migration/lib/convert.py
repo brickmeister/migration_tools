@@ -24,14 +24,11 @@ def convert(_json : List[Dict],
 
     # loop for all cells
     for _cell in _json:
-  
-        try:
-            _string.append(f"{_comment} DBTITLE 1,{_cell['title']}\n")
-        except:
-            _string.append(f"{_comment} MAGIC \n")
 
-        _string.append(f"{_comment} COMMAND ----------\n")
-        _string.append('\n')
+        if not 'title' in _cell:
+            _cell['title'] = ''
+
+        _string.append(f"{_comment} DBTITLE 1, {_cell['title']}\n")
 
         if not _user:
             try:
@@ -78,10 +75,11 @@ def convert(_json : List[Dict],
 
                 for _cmd in _str:
                     _string.append(f"{_comment} MAGIC {_cmd}\n")
-                _string.append('\n')
 
         except Exception as err:
             raise ValueError(err)
+
+        _string.append(f"{_comment} COMMAND ----------\n\n")
     
     ## if we still don't have a user, label it as unknown
     if _user == "":
